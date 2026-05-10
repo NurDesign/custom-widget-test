@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Case Study — WooCommerce Store for a Fashion Brand | Web Rahul</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ── TOKENS ── */
+:root {
+  --green:      #9fe870;
+  --green-dark: #7ecf4a;
+  --green-deep: #3d7a15;
+  --green-bg:   #f3fcea;
+  --green-mid:  #e0f8c8;
+  --ink:        #141a0e;
+  --ink-2:      #2b3520;
+  --slate:      #5a6b47;
+  --muted:      #8a9b76;
+  --border:     #d6e8c4;
+  --white:      #ffffff;
+  --off-white:  #fafdf6;
+  --shadow-sm:  0 2px 12px rgba(100,140,60,0.10);
+  --shadow-md:  0 8px 40px rgba(100,140,60,0.14);
+  --shadow-lg:  0 20px 60px rgba(100,140,60,0.18);
+}
+
+/* ── BASE ── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--off-white);
+  color:var(--ink-2);
+  overflow-x:hidden;
+  line-height:1.7;
+}
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:radial-gradient(circle,rgba(159,232,112,0.18) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.container { max-width:860px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding:16px 0;
+  background:rgba(250,253,246,0.88);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner {
+  max-width:1140px;
+  margin:0 auto;
+  padding:0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.nav-logo {
+  font-family:'Fraunces',serif;
+  font-size:1.35rem;
+  color:var(--ink);
+  font-weight:700;
+  text-decoration:none;
+}
+.nav-logo span { color:var(--green-dark); }
+.nav-back {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-size:.86rem;
+  font-weight:600;
+  color:var(--slate);
+  text-decoration:none;
+  padding:8px 16px;
+  border-radius:100px;
+  border:1.5px solid var(--border);
+  transition:all .2s;
+}
+.nav-back:hover { color:var(--ink); border-color:var(--green-dark); background:var(--green-bg); }
+.nav-cta {
+  background:var(--green);
+  color:var(--ink);
+  border:none;
+  padding:10px 24px;
+  border-radius:100px;
+  font-size:.88rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-block;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  box-shadow:0 4px 18px rgba(159,232,112,.45);
+}
+.nav-cta:hover { background:var(--green-dark); transform:translateY(-1px); }
+
+/* ── WAVE ── */
+hr.wave { border:none; height:2px; background:linear-gradient(90deg,transparent,var(--green),transparent); margin:0; }
+
+/* ── BREADCRUMB ── */
+.cs-breadcrumb {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:18px;
+}
+.cs-breadcrumb a {
+  color:var(--muted);
+  text-decoration:none;
+  transition:color .2s;
+}
+.cs-breadcrumb a:hover { color:var(--green-deep); }
+.cs-breadcrumb span { color:var(--green-dark); }
+
+/* ── READING TIME ── */
+.cs-read-time {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:16px;
+}
+.cs-read-time svg { width:14px; height:14px; fill:var(--muted); }
+
+/* ── HERO LAYOUT ── */
+.cs-hero-layout {
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:52px;
+  align-items:start;
+}
+.cs-hero-left {}
+.cs-hero-right { padding-top:20px; }
+
+/* ── MOCKUP ── */
+.cs-mockup {
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  position:sticky;
+  top:100px;
+}
+.cs-mockup-bar {
+  background:var(--green);
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.cs-mockup-dots { display:flex; gap:5px; }
+.cs-mockup-dot { width:9px; height:9px; border-radius:50%; background:rgba(0,0,0,.2); }
+.cs-mockup-url {
+  flex:1;
+  background:rgba(255,255,255,.5);
+  border-radius:6px;
+  padding:4px 10px;
+  font-size:.72rem;
+  color:var(--ink-2);
+  font-weight:600;
+}
+.cs-mockup-body { padding:20px; }
+.cs-mockup-hero {
+  background:var(--ink);
+  border-radius:10px;
+  height:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:12px;
+  position:relative;
+  overflow:hidden;
+}
+.cs-mockup-hero-glow {
+  position:absolute;
+  width:120px; height:60px;
+  background:var(--green);
+  border-radius:50%;
+  filter:blur(30px);
+  opacity:.3;
+}
+.cs-mockup-hero-text {
+  font-family:'Fraunces',serif;
+  font-size:.85rem;
+  font-weight:700;
+  color:var(--white);
+  position:relative;
+  z-index:1;
+}
+.cs-mockup-products {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+  margin-bottom:12px;
+}
+.cs-mockup-product {
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.cs-mockup-product-img {
+  height:52px;
+  background:var(--green-bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.2rem;
+}
+.cs-mockup-product-info { padding:6px 8px; }
+.cs-mockup-product-name { font-size:.6rem; font-weight:700; color:var(--ink); margin-bottom:2px; }
+.cs-mockup-product-price { font-size:.58rem; color:var(--green-deep); font-weight:700; }
+.cs-mockup-stats {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.cs-mockup-stat {
+  background:var(--green-bg);
+  border-radius:8px;
+  padding:10px;
+  text-align:center;
+}
+.cs-mockup-stat-num { font-family:'Fraunces',serif; font-size:.95rem; font-weight:700; color:var(--ink); }
+.cs-mockup-stat-num span { color:var(--green-dark); }
+.cs-mockup-stat-label { font-size:.58rem; color:var(--muted); font-weight:600; margin-top:2px; }
+
+/* ── RELATED CASE STUDIES ── */
+.cs-related {
+  padding:80px 0;
+  background:var(--off-white);
+  position:relative;
+  z-index:1;
+}
+.cs-related-title {
+  font-family:'Fraunces',serif;
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:32px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.cs-related-title::before {
+  content:'';
+  display:inline-block;
+  width:4px;
+  height:24px;
+  background:var(--green-dark);
+  border-radius:4px;
+  flex-shrink:0;
+}
+.cs-related-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.cs-related-card {
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  transition:all .25s;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+}
+.cs-related-card:hover { border-color:var(--green); transform:translateY(-4px); box-shadow:var(--shadow-md); }
+.cs-related-thumb {
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2.2rem;
+  position:relative;
+  overflow:hidden;
+}
+.cs-related-thumb::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(159,232,112,.15) 0%, transparent 70%);
+}
+.cs-related-body { padding:18px 20px; flex:1; display:flex; flex-direction:column; }
+.cs-related-cat {
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--green-deep);
+  background:var(--green-bg);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:3px 10px;
+  display:inline-block;
+  margin-bottom:10px;
+  width:fit-content;
+}
+.cs-related-card-title {
+  font-family:'Fraunces',serif;
+  font-size:.96rem;
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.4;
+  margin-bottom:8px;
+  flex:1;
+}
+.cs-related-link {
+  font-size:.82rem;
+  font-weight:700;
+  color:var(--green-deep);
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  transition:gap .2s;
+  margin-top:10px;
+}
+.cs-related-card:hover .cs-related-link { gap:8px; }
+
+/* ── HERO ── */
+.cs-hero {
+  padding:148px 0 80px;
+  position:relative;
+  overflow:hidden;
+}
+.cs-hero-blob {
+  position:absolute;
+  top:-80px; right:-200px;
+  width:580px; height:580px;
+  border-radius:50%;
+  background:radial-gradient(circle at 38% 38%, #d4f9a8 0%, var(--green) 44%, transparent 70%);
+  opacity:.12;
+  pointer-events:none;
+  animation:blob-float 10s ease-in-out infinite;
+}
+@keyframes blob-float {
+  0%,100% { transform:translateY(0) scale(1); }
+  50% { transform:translateY(-20px) scale(1.04); }
+}
+
+.section-label {
+  display:inline-block;
+  font-size:.71rem;
+  font-weight:700;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--green-deep);
+  background:var(--green-bg);
+  border:1.5px solid var(--green);
+  padding:4px 14px;
+  border-radius:100px;
+  margin-bottom:20px;
+}
+
+.cs-title {
+  font-family:'Fraunces',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  color:var(--ink);
+  line-height:1.12;
+  font-weight:700;
+  letter-spacing:-.025em;
+  margin-bottom:24px;
+}
+.cs-title em { color:var(--green-dark); font-style:italic; }
+
+.cs-overview {
+  font-size:1.08rem;
+  color:var(--slate);
+  line-height:1.85;
+  max-width:720px;
+  padding:26px 32px;
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-left:4px solid var(--green-dark);
+  border-radius:16px;
+  box-shadow:var(--shadow-sm);
+  margin-bottom:0;
+}
+
+/* ── META BAR ── */
+.cs-meta {
+  display:flex;
+  gap:0;
+  margin-top:48px;
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  background:var(--white);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.cs-meta-item {
+  flex:1;
+  padding:20px 24px;
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.cs-meta-item:last-child { border-right:none; }
+.cs-meta-label {
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.cs-meta-value {
+  font-size:.92rem;
+  font-weight:700;
+  color:var(--ink);
+  font-family:'Fraunces',serif;
+}
+
+/* ── SECTIONS ── */
+.cs-section {
+  padding:72px 0;
+  position:relative;
+  z-index:1;
+}
+.cs-section + .cs-section {
+  padding-top:0;
+}
+.cs-section-title {
+  font-family:'Fraunces',serif;
+  font-size:1.55rem;
+  color:var(--ink);
+  font-weight:700;
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.cs-section-title::before {
+  content:'';
+  display:inline-block;
+  width:4px;
+  height:24px;
+  background:var(--green-dark);
+  border-radius:4px;
+  flex-shrink:0;
+}
+.cs-section-body {
+  font-size:.98rem;
+  color:var(--slate);
+  line-height:1.9;
+}
+.cs-section-body p + p { margin-top:14px; }
+
+/* ── CHALLENGE CARDS ── */
+.cs-challenges { display:flex; flex-direction:column; gap:16px; margin-top:6px; }
+.cs-challenge-card {
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  padding:26px 28px;
+  transition:all .22s;
+  position:relative;
+  overflow:hidden;
+}
+.cs-challenge-card::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:3px;
+  background:var(--green);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .3s;
+}
+.cs-challenge-card:hover { border-color:var(--green); box-shadow:var(--shadow-md); }
+.cs-challenge-card:hover::after { transform:scaleX(1); }
+.cs-challenge-title {
+  font-size:.96rem;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.cs-challenge-dot {
+  width:8px; height:8px;
+  border-radius:50%;
+  background:var(--green-dark);
+  flex-shrink:0;
+}
+.cs-challenge-body {
+  font-size:.88rem;
+  color:var(--slate);
+  line-height:1.82;
+}
+
+/* ── TOOLS ── */
+.cs-tools-wrap {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:6px;
+}
+.cs-tool {
+  background:var(--green-bg);
+  border:1.5px solid var(--green);
+  border-radius:100px;
+  padding:7px 16px;
+  font-size:.82rem;
+  font-weight:700;
+  color:var(--green-deep);
+  transition:all .2s;
+}
+.cs-tool:hover { background:var(--green); color:var(--ink); transform:translateY(-2px); }
+
+/* ── RESULT ── */
+.cs-result-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:6px;
+  margin-bottom:26px;
+}
+.cs-result-stat {
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  padding:24px 20px;
+  text-align:center;
+  box-shadow:var(--shadow-sm);
+}
+.cs-result-num {
+  font-family:'Fraunces',serif;
+  font-size:2rem;
+  color:var(--ink);
+  font-weight:700;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.cs-result-num span { color:var(--green-dark); }
+.cs-result-label {
+  font-size:.78rem;
+  color:var(--muted);
+  font-weight:600;
+  line-height:1.5;
+}
+
+/* ── HOW IT ENDED ── */
+.cs-ending {
+  background:radial-gradient(circle at 10% 30%, rgba(159,232,112,.18), transparent 40%),
+             linear-gradient(180deg,var(--green-bg),#fbfff8);
+  border:1.5px solid var(--green);
+  border-radius:24px;
+  padding:44px 48px;
+  margin-top:6px;
+  position:relative;
+  overflow:hidden;
+}
+.cs-ending-quote {
+  font-family:'Fraunces',serif;
+  font-size:5rem;
+  color:rgba(159,232,112,.3);
+  line-height:.7;
+  height:28px;
+  margin-bottom:20px;
+  pointer-events:none;
+}
+.cs-ending-text {
+  font-size:1.02rem;
+  color:var(--ink-2);
+  line-height:1.92;
+}
+.cs-ending-text p + p { margin-top:16px; }
+
+/* ── CTA ── */
+.cs-cta-section {
+  padding:80px 0 96px;
+  position:relative;
+  z-index:1;
+}
+.cs-cta-banner {
+  background:var(--ink);
+  border-radius:28px;
+  padding:56px 52px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cs-cta-glow {
+  position:absolute;
+  top:-60px; left:50%;
+  transform:translateX(-50%);
+  width:400px; height:200px;
+  border-radius:50%;
+  background:var(--green);
+  opacity:.12;
+  filter:blur(60px);
+  pointer-events:none;
+}
+.cs-cta-label {
+  display:inline-block;
+  font-size:.71rem;
+  font-weight:700;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--green-dark);
+  background:rgba(159,232,112,.12);
+  border:1.5px solid rgba(159,232,112,.25);
+  padding:4px 14px;
+  border-radius:100px;
+  margin-bottom:20px;
+}
+.cs-cta-title {
+  font-family:'Fraunces',serif;
+  font-size:clamp(1.7rem,3vw,2.4rem);
+  color:var(--white);
+  font-weight:700;
+  line-height:1.2;
+  margin-bottom:14px;
+}
+.cs-cta-title em { color:var(--green); font-style:italic; }
+.cs-cta-sub {
+  font-size:.98rem;
+  color:rgba(255,255,255,.6);
+  max-width:480px;
+  margin:0 auto 34px;
+  line-height:1.82;
+}
+.btn-primary {
+  background:var(--green);
+  color:var(--ink);
+  padding:14px 34px;
+  border-radius:100px;
+  border:none;
+  font-size:.97rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-block;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  box-shadow:0 6px 22px rgba(159,232,112,.4);
+}
+.btn-primary:hover { background:var(--green-dark); transform:translateY(-2px); box-shadow:0 10px 30px rgba(159,232,112,.55); }
+
+/* ── DIVIDER ── */
+.cs-divider {
+  height:1.5px;
+  background:var(--border);
+  margin:0;
+  position:relative;
+  z-index:1;
+}
+
+/* ── FOOTER ── */
+footer {
+  background:var(--ink);
+  padding:40px 28px;
+  text-align:center;
+}
+.footer-logo {
+  font-family:'Fraunces',serif;
+  font-size:1.25rem;
+  color:var(--white);
+  font-weight:700;
+  text-decoration:none;
+  display:inline-block;
+  margin-bottom:12px;
+}
+.footer-logo span { color:var(--green-dark); }
+.footer-copy {
+  font-size:.8rem;
+  color:rgba(255,255,255,.35);
+}
+
+/* ── REVEAL ── */
+[data-reveal] {
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+[data-reveal].visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ── WHATSAPP ── */
+.floating-whatsapp {
+  position:fixed;
+  bottom:28px; right:28px;
+  width:54px; height:54px;
+  border-radius:50%;
+  background:#25d366;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 22px rgba(37,211,102,.45);
+  z-index:300;
+  transition:transform .2s;
+}
+.floating-whatsapp:hover { transform:scale(1.08); }
+.floating-whatsapp svg { width:28px; height:28px; fill:white; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px) {
+  .cs-hero-layout { grid-template-columns:1fr; }
+  .cs-hero-right { display:none; }
+  .cs-related-grid { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:700px) {
+  .cs-meta { flex-direction:column; }
+  .cs-meta-item { border-right:none; border-bottom:1px solid var(--border); }
+  .cs-meta-item:last-child { border-bottom:none; }
+  .cs-result-grid { grid-template-columns:1fr 1fr; }
+  .cs-ending { padding:32px 24px; }
+  .cs-cta-banner { padding:40px 28px; }
+  .nav-back { display:none; }
+  .cs-related-grid { grid-template-columns:1fr; }
+}
+@media(max-width:480px) {
+  .cs-result-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">Web<span>Rahul</span></a>
+    <a class="nav-back" href="#">&#8592; Back to Case Studies</a>
+    <a class="nav-cta" href="#">Request a Quote →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="cs-hero">
+  <div class="cs-hero-blob"></div>
+  <div class="container">
+
+    <!-- BREADCRUMB -->
+    <div class="cs-breadcrumb" data-reveal="">
+      <a href="#">Home</a>
+      <span>›</span>
+      <a href="#">Case Studies</a>
+      <span>›</span>
+      <span style="color:var(--ink-2);">WooCommerce</span>
+    </div>
+
+    <div class="cs-hero-layout">
+      <div class="cs-hero-left">
+
+        <!-- READING TIME -->
+        <div class="cs-read-time" data-reveal="">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          5 min read
+        </div>
+
+        <span class="section-label" data-reveal="">Case Study</span>
+        <h1 class="cs-title" data-reveal="">
+          WooCommerce Case Study:<br>
+          Custom Ecommerce Store for a <em>Fashion Brand</em>
+        </h1>
+        <p class="cs-overview" data-reveal="">
+          A UK based clothing brand was managing every order manually through DMs and emails. I built them a full WooCommerce store from the ground up. Within the first month they processed over 200 orders without touching a single message.
+        </p>
+
+        <!-- META -->
+        <div class="cs-meta" data-reveal="">
+          <div class="cs-meta-item">
+            <span class="cs-meta-label">Industry</span>
+            <span class="cs-meta-value">Fashion &amp; Apparel</span>
+          </div>
+          <div class="cs-meta-item">
+            <span class="cs-meta-label">Location</span>
+            <span class="cs-meta-value">United Kingdom</span>
+          </div>
+          <div class="cs-meta-item">
+            <span class="cs-meta-label">Service</span>
+            <span class="cs-meta-value">WooCommerce Dev</span>
+          </div>
+          <div class="cs-meta-item">
+            <span class="cs-meta-label">Timeline</span>
+            <span class="cs-meta-value">12 Days</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MOCKUP -->
+      <div class="cs-hero-right" data-reveal="">
+        <div class="cs-mockup">
+          <div class="cs-mockup-bar">
+            <div class="cs-mockup-dots">
+              <div class="cs-mockup-dot"></div>
+              <div class="cs-mockup-dot"></div>
+              <div class="cs-mockup-dot"></div>
+            </div>
+            <div class="cs-mockup-url">fashionbrand.co.uk/shop</div>
+          </div>
+          <div class="cs-mockup-body">
+            <div class="cs-mockup-hero">
+              <div class="cs-mockup-hero-glow"></div>
+              <span class="cs-mockup-hero-text">New Collection Drop</span>
+            </div>
+            <div class="cs-mockup-products">
+              <div class="cs-mockup-product">
+                <div class="cs-mockup-product-img">👗</div>
+                <div class="cs-mockup-product-info">
+                  <div class="cs-mockup-product-name">Linen Dress</div>
+                  <div class="cs-mockup-product-price">£89.00</div>
+                </div>
+              </div>
+              <div class="cs-mockup-product">
+                <div class="cs-mockup-product-img">👜</div>
+                <div class="cs-mockup-product-info">
+                  <div class="cs-mockup-product-name">Tote Bag</div>
+                  <div class="cs-mockup-product-price">£45.00</div>
+                </div>
+              </div>
+              <div class="cs-mockup-product">
+                <div class="cs-mockup-product-img">🧥</div>
+                <div class="cs-mockup-product-info">
+                  <div class="cs-mockup-product-name">Jacket</div>
+                  <div class="cs-mockup-product-price">£149.00</div>
+                </div>
+              </div>
+            </div>
+            <div class="cs-mockup-stats">
+              <div class="cs-mockup-stat">
+                <div class="cs-mockup-stat-num">200<span>+</span></div>
+                <div class="cs-mockup-stat-label">Orders / Month</div>
+              </div>
+              <div class="cs-mockup-stat">
+                <div class="cs-mockup-stat-num">1.8<span>s</span></div>
+                <div class="cs-mockup-stat-label">Load Time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="wave"/>
+
+<!-- THE CLIENT -->
+<section class="cs-section">
+  <div class="container">
+    <div data-reveal="">
+      <h2 class="cs-section-title">The Client and Their Business</h2>
+      <div class="cs-section-body">
+        <p>The client ran a mid-sized clothing brand based in the UK, selling physical apparel and limited edition drops to a growing online audience. Business was picking up. The audience was there. But their website had no store, no cart, no checkout. Every order was being handled through DMs and emails, one by one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- THE PROBLEM -->
+<section class="cs-section">
+  <div class="container">
+    <div data-reveal="">
+      <h2 class="cs-section-title">The Problem</h2>
+      <div class="cs-section-body">
+        <p>Customers were coming to the site ready to buy and leaving because there was no way to actually do it. Every sale required manual back and forth which was costing the client hours every day and costing the business real money. They needed a proper ecommerce store built from the ground up, one that matched their brand and could handle real volume.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- MY SOLUTION -->
+<section class="cs-section">
+  <div class="container">
+    <div data-reveal="">
+      <h2 class="cs-section-title">My Solution and Approach</h2>
+      <div class="cs-section-body">
+        <p>I chose WooCommerce because the client was already on WordPress and needed full design control. Moving to a new platform entirely would have cost more time and money than the problem was worth. Before any development started I mapped out the full product structure, payment flow, and order system so there were no surprises mid build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- CHALLENGES -->
+<section class="cs-section">
+  <div class="container">
+    <div data-reveal="">
+      <h2 class="cs-section-title">Challenges I Solved</h2>
+      <div class="cs-challenges">
+
+        <div class="cs-challenge-card">
+          <div class="cs-challenge-title">
+            <span class="cs-challenge-dot"></span>
+            Variable Products
+          </div>
+          <p class="cs-challenge-body">The client sold clothing in multiple sizes and colors, each with their own stock levels. Getting this to work cleanly in WooCommerce without the UI breaking or stock miscounting took careful setup and a fair amount of custom CSS work.</p>
+        </div>
+
+        <div class="cs-challenge-card">
+          <div class="cs-challenge-title">
+            <span class="cs-challenge-dot"></span>
+            Payment Gateway Conflicts
+          </div>
+          <p class="cs-challenge-body">The client wanted both Stripe and PayPal running at the same time. They were conflicting in the checkout and causing sessions to drop. I debugged it until both gateways worked without any friction for the customer.</p>
+        </div>
+
+        <div class="cs-challenge-card">
+          <div class="cs-challenge-title">
+            <span class="cs-challenge-dot"></span>
+            Site Speed
+          </div>
+          <p class="cs-challenge-body">The product image gallery was heavy and the site was slow because of it. I compressed everything, set up lazy loading, and configured caching properly. The store ended up fast enough to handle traffic spikes without slowing down.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- TOOLS -->
+<section class="cs-section">
+  <div class="container">
+    <div data-reveal="">
+      <h2 class="cs-section-title">Tools Used</h2>
+      <div class="cs-tools-wrap">
+        <span class="cs-tool">WordPress</span>
+        <span class="cs-tool">WooCommerce</span>
+        <span class="cs-tool">Elementor Pro</span>
+        <span class="cs-tool">Stripe</span>
+        <span class="cs-tool">PayPal</span>
+        <span class="cs-tool">WP Rocket</span>
+        <span class="cs-tool">Smush</span>
+        <span class="cs-tool">ACF</span>
+        <span class="cs-tool">Variation Swatches for WooCommerce</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- RESULT -->
+<section class="cs-section">
+  <div class="container">
+    <div data-reveal="">
+      <h2 class="cs-section-title">The Result</h2>
+      <div class="cs-result-grid">
+        <div class="cs-result-stat">
+          <div class="cs-result-num">12<span>d</span></div>
+          <div class="cs-result-label">Store launched in 12 days</div>
+        </div>
+        <div class="cs-result-stat">
+          <div class="cs-result-num">200<span>+</span></div>
+          <div class="cs-result-label">Orders in the first month</div>
+        </div>
+        <div class="cs-result-stat">
+          <div class="cs-result-num">1.8<span>s</span></div>
+          <div class="cs-result-label">Page load time, down from 6.2s</div>
+        </div>
+      </div>
+      <div class="cs-section-body">
+        <p>In the first month alone the client processed over 200 orders directly through the site without touching a single DM. Page load time went from 6.2 seconds down to 1.8 seconds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- HOW IT ENDED -->
+<section class="cs-section">
+  <div class="container">
+    <div data-reveal="">
+      <h2 class="cs-section-title">The Outcome</h2>
+      <div class="cs-ending">
+        <div class="cs-ending-quote">"</div>
+        <div class="cs-ending-text">
+          <p>Before this project the client was handling every order by hand, one message at a time. After the store went live that was completely gone. Orders came in, got processed, and went out without them having to do anything manually.</p>
+          <p>They were genuinely relieved. Something that used to eat their day was just not a problem anymore and they felt it immediately. A few weeks later they reached out wanting to add more to the store. That was a good sign for me.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="wave"/>
+
+<!-- CTA -->
+<section class="cs-cta-section">
+  <div class="container">
+    <div class="cs-cta-banner" data-reveal="">
+      <div class="cs-cta-glow"></div>
+      <span class="cs-cta-label">Work with Rahul</span>
+      <h2 class="cs-cta-title">Got a project like this or something <em>completely different?</em></h2>
+      <p class="cs-cta-sub">Send me a message and let's figure it out together.</p>
+      <a class="btn-primary" href="#">Send a Message →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="#">Web<span>Rahul</span></a>
+  <p class="footer-copy">© 2025 Web Rahul. All rights reserved.</p>
+</footer>
+
+<!-- WHATSAPP -->
+<a aria-label="Chat with Web Rahul on WhatsApp" class="floating-whatsapp" href="https://wa.me/YOUR_NUMBER_HERE" rel="noopener" target="_blank">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+    <path d="M16.02 3.2c-7.03 0-12.75 5.62-12.75 12.54 0 2.22.6 4.39 1.73 6.3L3.2 28.8l6.96-1.77a12.9 12.9 0 0 0 5.86 1.43c7.03 0 12.75-5.62 12.75-12.54S23.05 3.2 16.02 3.2Zm0 22.98c-1.92 0-3.8-.51-5.44-1.47l-.39-.23-4.13 1.05 1.1-4-.26-.41a10.24 10.24 0 0 1-1.35-5.1c0-5.66 4.7-10.26 10.48-10.26s10.48 4.6 10.48 10.26-4.7 10.16-10.49 10.16Zm5.74-7.65c-.31-.15-1.84-.9-2.13-1-.29-.1-.5-.15-.71.15-.21.31-.81 1-.99 1.2-.18.21-.37.23-.68.08-.31-.15-1.32-.48-2.51-1.53-.93-.82-1.56-1.84-1.74-2.15-.18-.31-.02-.48.14-.63.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.15-.71-1.69-.97-2.31-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.55.08-.84.39-.29.31-1.1 1.07-1.1 2.61s1.13 3.03 1.29 3.24c.16.21 2.22 3.35 5.38 4.7.75.32 1.34.51 1.8.65.76.24 1.45.2 1.99.12.61-.09 1.84-.75 2.1-1.47.26-.72.26-1.34.18-1.47-.08-.13-.29-.21-.6-.36Z"/>
+  </svg>
+</a>
+
+<script>
+/* SCROLL REVEAL */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
